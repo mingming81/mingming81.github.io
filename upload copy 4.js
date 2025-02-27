@@ -5,7 +5,6 @@ document.addEventListener("DOMContentLoaded", function () {
 async function uploadFile() {
     let fileInput = document.getElementById("fileInput");
     let requestType = document.getElementById("requestType").value;
-    let outputFormat = document.getElementById("outputFormat").value; // Get selected format
     let outputElement = document.getElementById("output");
 
     if (!fileInput.files.length) {
@@ -18,7 +17,7 @@ async function uploadFile() {
     formData.append("file", file);
     formData.append("request_type", requestType);
     formData.append("user_id", "github_user");
-    formData.append("output_format", outputFormat); // Send selected format
+    formData.append("output_format", "pdf");  // Can be "docx" or "pdf"
 
     outputElement.innerText = "⏳ Uploading file... Please wait.";
 
@@ -32,16 +31,15 @@ async function uploadFile() {
             throw new Error(`Server responded with ${response.status}`);
         }
 
-        let result = await response.json();
-
         // ✅ Convert response to a downloadable file
-        let fileUrl = result.file_url;
-        let filename = fileUrl.split("/").pop();
-
+        let blob = await response.blob();
+        let url = window.URL.createObjectURL(blob);
         let downloadLink = document.createElement("a");
-        downloadLink.href = fileUrl;
+
+        let filename = response.headers.get("Content-Disposition")?.split("filename=")[1] || "generated_file.pdf";
+        downloadLink.href = url;
         downloadLink.download = filename;
-        downloadLink.innerText = `📥 Download ${filename}`;
+        downloadLink.innerText = "📥 Download File";
         downloadLink.setAttribute("target", "_blank");
 
         outputElement.innerText = "✅ File generated successfully!";
