@@ -19,10 +19,8 @@ async function uploadFile() {
     formData.append("user_id", "github_user");
     formData.append("output_format", "pdf");  // Can be "docx" or "pdf"
 
-    outputElement.innerText = "⏳ Uploading file... Please wait.";
-
     try {
-        let response = await fetch("https://mingmingmyfastapi.duckdns.org:8000/upload/", {
+        let response = await fetch("https://52.91.126.235:8000/upload/", {
             method: "POST",
             body: formData
         });
