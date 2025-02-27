@@ -4,8 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Upload Financial Report</title>
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://api.mingmingqiu.com;">
-    <link rel="stylesheet" href="/_pages/style.css">
+
+    <!-- ✅ Fix CSP: Remove inline scripts -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://52.91.126.235:8000; style-src 'self'; img-src 'self'; connect-src 'self' https://52.91.126.235:8000;">
+
+    <!-- ✅ Load External Styles -->
+    <link rel="stylesheet" href="/style.css">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
 </head>
 <body>
     <h1>Upload Financial Report</h1>
@@ -29,6 +34,7 @@
     <h2>Generated Content:</h2>
     <pre id="output"></pre>
 
+    <!-- ✅ Fix CSP: Move JavaScript to an External File -->
     <script src="/upload.js"></script>
 </body>
 </html>
