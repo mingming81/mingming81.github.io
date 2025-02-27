@@ -32,14 +32,12 @@ async function uploadFile() {
             throw new Error(`Server responded with ${response.status}`);
         }
 
-        let result = await response.json();
-
-        // ✅ Convert response to a downloadable file
-        let fileUrl = result.file_url;
-        let filename = fileUrl.split("/").pop();
-
+        let blob = await response.blob();
+        let url = window.URL.createObjectURL(blob);
         let downloadLink = document.createElement("a");
-        downloadLink.href = fileUrl;
+
+        let filename = `generated_file.${outputFormat}`;
+        downloadLink.href = url;
         downloadLink.download = filename;
         downloadLink.innerText = `📥 Download ${filename}`;
         downloadLink.setAttribute("target", "_blank");
@@ -47,7 +45,6 @@ async function uploadFile() {
         outputElement.innerText = "✅ File generated successfully!";
         outputElement.appendChild(document.createElement("br"));
         outputElement.appendChild(downloadLink);
-
     } catch (error) {
         outputElement.innerText = `❌ Error: ${error.message}`;
         console.error("Upload failed:", error);
