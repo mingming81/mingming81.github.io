@@ -23,7 +23,7 @@ async function uploadFile() {
     outputElement.innerText = "⏳ Uploading file... Please wait.";
 
     try {
-        let response = await fetch("https://mingmingmyfastapi.duckdns.org:8000/upload/", {
+        let response = await fetch("https://mingmingmyfastapi2.duckdns.org:8000/upload/", {
             method: "POST",
             body: formData
         });
