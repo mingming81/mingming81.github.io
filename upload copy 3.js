@@ -31,18 +31,17 @@ async function uploadFile() {
             throw new Error(`Server responded with ${response.status}`);
         }
 
-        // ✅ Convert response to a downloadable file
-        let blob = await response.blob();
-        let url = window.URL.createObjectURL(blob);
-        let downloadLink = document.createElement("a");
+        let result = await response.json();
 
-        let filename = response.headers.get("Content-Disposition")?.split("filename=")[1] || "generated_file.pdf";
-        downloadLink.href = url;
-        downloadLink.download = filename;
+        // ✅ Display the generated content in the browser
+        outputElement.innerText = `📄 Generated Content: \n\n${result.generated_content}`;
+
+        // ✅ Provide a file download link
+        let downloadLink = document.createElement("a");
+        downloadLink.href = result.file_url;
         downloadLink.innerText = "📥 Download File";
         downloadLink.setAttribute("target", "_blank");
 
-        outputElement.innerText = "✅ File generated successfully!";
         outputElement.appendChild(document.createElement("br"));
         outputElement.appendChild(downloadLink);
 
