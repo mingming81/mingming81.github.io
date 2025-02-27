@@ -20,7 +20,7 @@ async function uploadFile() {
     formData.append("output_format", "pdf");  // Can be "docx" or "pdf"
 
     try {
-        let response = await fetch("https://52.91.126.235:8000/upload/", {
+        let response = await fetch("http://52.91.126.235:8000/upload/", {
             method: "POST",
             body: formData
         });
